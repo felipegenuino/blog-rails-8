@@ -3,7 +3,7 @@ import "controllers"
 import "trix"
 import "@rails/actiontext"
 
-// Importamos apenas o que é estritamente necessário
+// Importamos os ícones necessários do Lucide
 import {
     createIcons,
     Pencil,
@@ -11,6 +11,7 @@ import {
     ArrowLeft,
     LayoutDashboard,
     Plus,
+    PlusCircle,
     Save,
     X,
     LogIn,
@@ -18,6 +19,7 @@ import {
     Lock,
     LogOut,
     Settings,
+    Settings2,
     Mail,
     CheckCircle,
     AlertCircle,
@@ -26,15 +28,14 @@ import {
     StickyNote,
     Clock,
     Eye,
-    Twitter,
-    Linkedin,
-    Link,
-    Settings2,
-    PlusCircle,
+    ChevronDown,
     Search,
-    ChevronDown
+    Link as LinkIcon, // Renomeado para não conflitar com palavras reservadas
+    Twitter,
+    Linkedin
 } from "lucide"
 
+// Função para inicializar os ícones na tela
 const initializeIcons = () => {
     createIcons({
         icons: {
@@ -43,6 +44,7 @@ const initializeIcons = () => {
             ArrowLeft,
             LayoutDashboard,
             Plus,
+            PlusCircle,
             Save,
             X,
             LogIn,
@@ -50,6 +52,7 @@ const initializeIcons = () => {
             Lock,
             LogOut,
             Settings,
+            Settings2,
             Mail,
             CheckCircle,
             AlertCircle,
@@ -58,17 +61,15 @@ const initializeIcons = () => {
             StickyNote,
             Clock,
             Eye,
-            Twitter,
-            Linkedin,
-            Link,
-            Settings2,
-            PlusCircle,
+            ChevronDown,
             Search,
-            ChevronDown
+            Link: LinkIcon,
+            Twitter,
+            Linkedin
         }
     })
 }
 
-// Escuta tanto o carregamento inicial quanto as navegações do Turbo
+// O Turbo do Rails 8 exige que reinicializemos os ícones a cada navegação
 document.addEventListener("turbo:load", initializeIcons)
 document.addEventListener("turbo:render", initializeIcons)
