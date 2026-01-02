@@ -1,17 +1,47 @@
-<%# app/views/posts/show.html.erb %>
+<%# Layout de Artigo Centralizado %>
+<div class="py-12 sm:py-16">
+  <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+    
+    <%# Cabeçalho do Post %>
+    <nav class="mb-8 flex items-center gap-x-4 text-xs">
+      <time datetime="<%= @post.created_at %>" class="text-gray-500">
+        <%= @post.created_at.strftime("%d de %B, %Y") %>
+      </time>
+      <span class="rounded-full bg-indigo-50 px-3 py-1.5 font-bold text-indigo-600 uppercase">
+        <%= @post.content_type %>
+      </span>
+    </nav>
 
-<h1><%= @post.title %></h1>
+    <h1 class="mt-2 text-3xl font-black tracking-tight text-gray-900 sm:text-5xl mb-8">
+      <%= @post.title %>
+    </h1>
 
-<%# A classe trix-content é essencial para que o CSS do editor seja aplicado %>
-<div class="trix-content mb-4">
-  <%= @post.content %>
+    <%# Resumo/Intro com destaque %>
+    <% if @post.summary.present? %>
+      <p class="text-xl leading-8 text-gray-600 italic border-l-4 border-indigo-500 pl-6 my-10">
+        <%= @post.summary %>
+      </p>
+    <% end %>
+
+    <%# Conteúdo Principal (Action Text) %>
+    <div class="mt-10">
+      <%# A classe prose-img:rounded-3xl aplica o arredondamento em todas as imagens do post %>
+      <div class="prose prose-lg prose-indigo max-w-none trix-content prose-img:rounded-3xl prose-img:shadow-lg prose-figcaption:text-center prose-figcaption:text-sm prose-figcaption:text-gray-500">
+      <%= @post.content %>
+      </div>
+    </div>
+
+    <%# Rodapé do Artigo com Ações Admin %>
+    <div class="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between">
+      <%= link_to "← Voltar para o Blog", posts_path, class: "text-sm font-bold text-gray-900 hover:text-indigo-600 transition-colors" %>
+      
+      <% if authenticated? %>
+        <div class="flex gap-4">
+          <%= link_to "Editar este post", edit_post_path(@post), class: "text-sm font-semibold text-indigo-600" %>
+          <%= button_to "Apagar", @post, method: :delete, data: { confirm: "Tem certeza?" }, class: "text-sm font-semibold text-red-600" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
 </div>
-
-
-
-<%= button_to "Excluir Post", @post, method: :delete, 
-    data: { confirm: "Tem certeza?" }, 
-    class: "text-red-600 hover:underline" %>
-
-<%= link_to "Editar", edit_post_path(@post) %> |
-<%= link_to "Voltar", posts_path %>

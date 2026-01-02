@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+
+@layer components {
+
+    /* Estiliza o container do Action Text */
+    .trix-content {
+        @apply leading-relaxed text-gray-800;
+    }
+
+    /* Deixa as imagens com aspecto de 'portal' */
+    .trix-content figure {
+        @apply my-10 p-0 border-none;
+    }
+
+    /* Se houver legenda na imagem, estiliza ela */
+    .trix-content figcaption {
+        @apply mt-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider;
+    }
+
+    /* Garante que vídeos e embeds dentro do post fiquem no tamanho certo */
+    .trix-content iframe {
+        @apply w-full aspect-video rounded-2xl shadow-lg my-8;
+    }
+
+    /* Estilo para imagens dentro do texto rico */
+    .trix-content img {
+        @apply mx-auto rounded-2xl border border-gray-100 shadow-sm;
+    }
+}

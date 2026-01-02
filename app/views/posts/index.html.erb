@@ -1,19 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<div class="py-12 sm:py-16"> <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    
+    <div class="mx-auto max-w-2xl text-center mb-16">
+      <h2 class="text-4xl font-black tracking-tight text-gray-900 sm:text-6xl">Meu Blog</h2>
+      <p class="mt-4 text-lg leading-8 text-gray-600">Conteúdos, vídeos e notas sobre tecnologia e vida.</p>
+    </div>
 
-<% content_for :title, "Posts" %>
-
-<h1>Posts</h1>
-
-<div id="posts">
-  <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post,  class: "inline-block text-red-500"   %>
-    </p>
-    <%= button_to "Deletar", post, method: :delete, 
-        data: { confirm: "Deseja apagar este post?" },
-        class: "inline-block text-red-500" %>
-  <% end %>
+    <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+       <%= render @posts %>
+    </div>
+    
+  </div>
 </div>
-<hr/>
-<%= link_to "New post", new_post_path %>
