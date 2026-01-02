@@ -4,11 +4,56 @@ import "trix"
 import "@rails/actiontext"
 
 // Importamos apenas o que é estritamente necessário
-import { createIcons, Pencil, Trash2, ArrowLeft, LayoutDashboard, Plus, Save, X } from "lucide"
+import {
+    createIcons,
+    Pencil,
+    Trash2,
+    ArrowLeft,
+    LayoutDashboard,
+    Plus,
+    Save,
+    X,
+    LogIn,
+    User,
+    Lock,
+    LogOut,
+    Settings,
+    Mail,
+    CheckCircle,
+    AlertCircle,
+    //ArrowLeft,
+    Files,
+    Video,
+    StickyNote,
+    Clock,
+    Eye
+} from "lucide"
 
 const initializeIcons = () => {
     createIcons({
-        icons: { Pencil, Trash2, ArrowLeft, LayoutDashboard, Plus, Save, X }
+        icons: {
+            Pencil,
+            Trash2,
+            ArrowLeft,
+            LayoutDashboard,
+            Plus,
+            Save,
+            X,
+            LogIn,
+            User,
+            Lock,
+            LogOut,
+            Settings,
+            Mail,
+            CheckCircle,
+            AlertCircle,
+            //ArrowLeft,
+            Files,
+            Video,
+            StickyNote,
+            Clock,
+            Eye
+        }
     })
 }
 

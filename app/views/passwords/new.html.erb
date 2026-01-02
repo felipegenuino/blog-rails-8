@@ -1,8 +1,57 @@
-<h1>Forgot your password?</h1>
+ 
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.submit "Email reset instructions" %>
-<% end %>
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+    <%# Ícone de Chave ou Cadeado para contexto %>
+    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
+      <i data-lucide="lock" class="h-6 w-6 text-indigo-600"></i>
+    </div>
+    
+    <h2 class="mt-6 text-center text-3xl font-black tracking-tight text-gray-900">
+      Recuperar senha
+    </h2>
+    <p class="mt-2 text-center text-sm text-gray-600">
+      Digite seu e-mail e enviaremos um link para você criar uma nova senha.
+    </p>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div class="bg-white px-6 py-12 shadow-xl ring-1 ring-gray-900/5 sm:rounded-3xl sm:px-12 border border-gray-100">
+      
+      <%= form_with url: passwords_path, class: "space-y-6" do |f| %>
+        
+        <% if alert %>
+          <div class="rounded-xl bg-red-50 p-4 mb-6 flex items-center gap-3">
+            <i data-lucide="x" class="h-5 w-5 text-red-400"></i>
+            <p class="text-sm font-medium text-red-800"><%= alert %></p>
+          </div>
+        <% end %>
+
+        <div>
+          <label for="email_address" class="block text-sm font-semibold leading-6 text-gray-900">E-mail cadastrado</label>
+          <div class="mt-2 relative">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <i data-lucide="mail" class="h-4 w-4 text-gray-400"></i>
+            </div>
+            <%= f.email_field :email_address, required: true, autofocus: true, placeholder: "seu@email.com",
+                class: "block w-full rounded-xl border-0 py-2.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.submit "Enviar instruções", 
+              class: "flex w-full justify-center rounded-xl bg-indigo-600 px-3 py-2.5 text-sm font-bold leading-6 text-white shadow-sm hover:bg-indigo-500 transition-all cursor-pointer" %>
+        </div>
+      <% end %>
+
+      <div class="mt-8 pt-6 border-t border-gray-100">
+        <%= link_to new_session_path, class: "flex items-center justify-center gap-x-2 text-sm font-semibold text-gray-600 hover:text-indigo-600 transition-colors" do %>
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          Voltar para o login
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

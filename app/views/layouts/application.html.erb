@@ -23,27 +23,11 @@
   </head>
 
 <body class="min-h-screen bg-gray-50 font-sans antialiased text-gray-900 flex flex-col">
-  
-  <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 justify-between items-center">
-        <div class="flex items-center gap-4">
-          <%= link_to "Meu Blog", root_path, class: "text-2xl font-black tracking-tighter text-indigo-600 hover:text-indigo-800 transition-colors" %>
-        </div>
-        
-        <div class="flex items-center space-x-6">
-          <%= link_to "Todos os Posts", posts_path, class: "text-sm font-semibold text-gray-600 hover:text-indigo-600 transition-colors" %>
-          
-          <% if authenticated? %>
-            <%= link_to "Admin", admin_root_path, class: "rounded-full bg-gray-900 px-4 py-2 text-xs font-bold text-white hover:bg-gray-700 transition-all" %>
-          <% else %>
-            <%= link_to "Entrar", new_session_path, class: "text-sm font-semibold text-gray-900" %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <%= render "layouts/navbar" %> <%# Se você moveu a navbar para um partial %>
+  <%= render "layouts/flash" %> <%# A mágica acontece aqui %>
 
+
+ 
   <div class="flex-grow">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
       <%= yield %>
