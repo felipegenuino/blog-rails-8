@@ -49,7 +49,7 @@ gem 'activestorage'
  
 gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on', branch: 'master'
  
-# gem 'friendly_id', '~> 5.4.0'
+gem "friendly_id"
 
 gem "tailwindcss-rails"
 

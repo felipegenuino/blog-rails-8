@@ -75,7 +75,9 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params.expect(:id))
+      # O FriendlyId permite que você continue usando .find para IDs 
+      # ou use o slug automaticamente.
+      @post = Post.friendly.find(params[:id])
     end
 
    

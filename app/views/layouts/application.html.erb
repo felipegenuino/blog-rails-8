@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Blog" %></title>
+
+  <title><%= content_for(:title) || "Meu Blog Rails 8" %></title>
+  <meta name="description" content="<%= content_for(:description) || "Dicas de programação, Rails e tecnologia." %>">
+   
+    <%# Tags para Redes Sociais (Open Graph) %>
+    <meta property="og:title" content="<%= content_for(:title) || "Meu Blog" %>">
+    <meta property="og:description" content="<%= content_for(:description) || "Confira meu último post!" %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    
+ 
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">

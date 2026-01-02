@@ -21,12 +21,18 @@ import {
     Mail,
     CheckCircle,
     AlertCircle,
-    //ArrowLeft,
     Files,
     Video,
     StickyNote,
     Clock,
-    Eye
+    Eye,
+    Twitter,
+    Linkedin,
+    Link,
+    Settings2,
+    PlusCircle,
+    Search,
+    ChevronDown
 } from "lucide"
 
 const initializeIcons = () => {
@@ -47,12 +53,18 @@ const initializeIcons = () => {
             Mail,
             CheckCircle,
             AlertCircle,
-            //ArrowLeft,
             Files,
             Video,
             StickyNote,
             Clock,
-            Eye
+            Eye,
+            Twitter,
+            Linkedin,
+            Link,
+            Settings2,
+            PlusCircle,
+            Search,
+            ChevronDown
         }
     })
 }

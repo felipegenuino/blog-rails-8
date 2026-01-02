@@ -1,59 +1,75 @@
+<%= form_with(model: post, class: "max-w-4xl mx-auto") do |form| %>
+  <div class="bg-white shadow-sm border border-gray-100 rounded-3xl overflow-hidden">
+    
+    <%# Cabeçalho Interno do Card %>
+    <div class="bg-gray-50/50 px-8 py-6 border-b border-gray-100">
+      <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+        <i data-lucide="pencil" class="w-5 h-5 text-indigo-600"></i>
+        Informações do Conteúdo
+      </h3>
+      <p class="text-sm text-gray-500 mt-1">Preencha os detalhes abaixo para publicar seu post.</p>
+    </div>
 
+    <div class="p-8 space-y-8">
+      <%# Grid para Título e Tipo %>
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-6">
+        <div class="sm:col-span-4">
+          <%= form.label :title, "Título do Post", class: "block text-sm font-bold text-gray-700 mb-2" %>
+          <%= form.text_field :title, 
+              placeholder: "Ex: Como configurar Rails 8 no WSL2",
+              class: "block w-full rounded-2xl border-gray-200 py-3 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all placeholder:text-gray-400" %>
+        </div>
 
-
-
-<%= form_with(model: post, class: "space-y-8 divide-y divide-gray-200") do |form| %>
-  <div class="space-y-8 divide-y divide-gray-200">
-    <div>
-      <div>
-        <h3 class="text-base font-semibold leading-6 text-gray-900 italic">Informações do Post</h3>
+       <div class="sm:col-span-2">
+          <%= form.label :content_type, "Categoria", class: "block text-sm font-bold text-gray-700 mb-2" %>
+          <div class="relative">
+            <%= form.select :content_type, Post.content_types.keys.map { |t| [t.titleize, t] }, {}, 
+                class: "block w-full rounded-2xl border-gray-200 py-3 pl-4 pr-10 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all cursor-pointer appearance-none bg-white" %>
+            
+            <%# Adicionamos um ícone customizado para garantir que ele nunca quebre %>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+              <i data-lucide="chevron-down" class="h-4 w-4 text-gray-400"></i>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-        <div class="sm:col-span-4">
-          <%= form.label :title, "Título do Post", class: "block text-sm font-medium leading-6 text-gray-900" %>
-          <div class="mt-2">
-            <%= form.text_field :title, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
+      <%# Campo de Resumo (SEO) %>
+      <div>
+        <%= form.label :summary, "Resumo para SEO", class: "block text-sm font-bold text-gray-700 mb-2" %>
+        <div class="relative group">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+            <i data-lucide="search" class="h-4 w-4 text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
           </div>
+          <%= form.text_area :summary, rows: 2, 
+              placeholder: "Uma breve descrição para aparecer no Google e redes sociais...",
+              class: "block w-full rounded-2xl border-gray-200 py-3 pl-11 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all placeholder:text-gray-400" %>
         </div>
+      </div>
 
-        <div class="sm:col-span-2">
-          <%= form.label :content_type, "Tipo", class: "block text-sm font-medium leading-6 text-gray-900" %>
-          <div class="mt-2">
-            <%= form.select :content_type, Post.content_types.keys.map { |t| [t.titleize, t] }, {}, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
-          </div>
-        </div>
-
-        <div class="sm:col-span-6">
-          <%= form.label :summary, "Resumo (SEO)", class: "block text-sm font-medium leading-6 text-gray-900" %>
-          <div class="mt-2">
-            <%= form.text_area :summary, rows: 2, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
-          </div>
-        </div>
-
-        <div class="sm:col-span-6">
-          <%= form.label :content, "Conteúdo", class: "block text-sm font-medium leading-6 text-gray-900 mb-2" %>
-          <div class="mt-2 prose max-w-none">
-            <%= form.rich_textarea :content, class: "block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600" %>
+      <%# Campo de Conteúdo (Trix) %>
+      <div>
+        <%= form.label :content, "Conteúdo do Post", class: "block text-sm font-bold text-gray-700 mb-3" %>
+        <div class="prose max-w-none">
+          <%# O segredo aqui é o padding e o arredondamento no wrapper do Trix %>
+          <div class="rounded-2xl border border-gray-200 shadow-sm overflow-hidden focus-within:ring-2 focus-within:ring-indigo-600 focus-within:border-transparent transition-all">
+            <%= form.rich_textarea :content, class: "min-h-[300px] border-none focus:ring-0 p-4" %>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-<div class="pt-5 border-t border-gray-200 mt-8">
-  <div class="flex justify-end gap-x-3">
-    <%# Botão Cancelar %>
-    <%= link_to posts_path, class: "flex items-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-all" do %>
-      <i data-lucide="x" class="w-4 h-4 text-gray-500"></i>
-      Cancelar
-    <% end %>
+    <%# Rodapé com Ações %>
+    <div class="bg-gray-50 px-8 py-6 flex items-center justify-end gap-4 border-t border-gray-100">
+      <%= link_to posts_path, class: "inline-flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all" do %>
+        <i data-lucide="x" class="w-4 h-4"></i>
+        Cancelar
+      <% end %>
 
-    <%# Botão Salvar %>
-    <%= form.button class: "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all" do %>
-      <i data-lucide="save" class="w-4 h-4"></i>
-      <%= post.new_record? ? "Publicar Post" : "Salvar Alterações" %>
-    <% end %>
+      <%= form.button class: "inline-flex items-center gap-2 px-8 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-500 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer" do %>
+        <i data-lucide="save" class="w-4 h-4"></i>
+        <%= post.new_record? ? "Publicar Conteúdo" : "Salvar Alterações" %>
+      <% end %>
+    </div>
   </div>
-</div>
 <% end %>
