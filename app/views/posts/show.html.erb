@@ -1,10 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<%# app/views/posts/show.html.erb %>
 
-<%= render @post %>
+<h1><%= @post.title %></h1>
 
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> |
-  <%= link_to "Back to posts", posts_path %>
-
-  <%= button_to "Destroy this post", @post, method: :delete %>
+<%# A classe trix-content é essencial para que o CSS do editor seja aplicado %>
+<div class="trix-content mb-4">
+  <%= @post.content %>
 </div>
+
+
+
+<%= button_to "Excluir Post", @post, method: :delete, 
+    data: { confirm: "Tem certeza?" }, 
+    class: "text-red-600 hover:underline" %>
+
+<%= link_to "Editar", edit_post_path(@post) %> |
+<%= link_to "Voltar", posts_path %>

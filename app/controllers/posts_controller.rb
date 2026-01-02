@@ -1,5 +1,12 @@
 class PostsController < ApplicationController
+ 
+  # Permite que visitantes vejam os posts (index e show)
+  # Mas exige login para qualquer outra ação (new, edit, create, etc)
+  allow_unauthenticated_access only: %i[ index show ]
+  
   before_action :set_post, only: %i[ show edit update destroy ]
+
+  
 
   # GET /posts or /posts.json
   def index
@@ -18,6 +25,12 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
   end
+
+
+   # Only allow a list of trusted parameters through.
+    def post_params
+           params.require(:post).permit(:title, :summary, :content_type, :published_at, :content)
+    end
 
   # POST /posts or /posts.json
   def create
@@ -52,7 +65,9 @@ class PostsController < ApplicationController
     @post.destroy!
 
     respond_to do |format|
-      format.html { redirect_to posts_path, notice: "Post was successfully destroyed.", status: :see_other }
+      # Garante que volta para a página inicial de posts com uma mensagem
+    format.html { redirect_to posts_path, status: :see_other, notice: "Post removido com sucesso." }
+     
       format.json { head :no_content }
     end
   end
@@ -63,8 +78,5 @@ class PostsController < ApplicationController
       @post = Post.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
-    def post_params
-      params.expect(post: [ :title, :summary, :content_type, :published_at ])
-    end
+   
 end

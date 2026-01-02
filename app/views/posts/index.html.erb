@@ -8,9 +8,12 @@
   <% @posts.each do |post| %>
     <%= render post %>
     <p>
-      <%= link_to "Show this post", post %>
+      <%= link_to "Show this post", post,  class: "inline-block text-red-500"   %>
     </p>
+    <%= button_to "Deletar", post, method: :delete, 
+        data: { confirm: "Deseja apagar este post?" },
+        class: "inline-block text-red-500" %>
   <% end %>
 </div>
-
+<hr/>
 <%= link_to "New post", new_post_path %>

@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get "dashboard", to: "dashboard#index"
+    root to: "dashboard#index" # Faz /admin cair direto no dashboard
+    # get "dashboard/index"
+  end
+  
+  resource :session
+  resources :passwords, param: :token
   resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

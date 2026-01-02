@@ -1,0 +1,17 @@
+<h1>Admin::Dashboard#index</h1>
+<p>Find me in app/views/admin/dashboard/index.html.erb</p>
+
+
+<hr>
+
+<h1>Painel Administrativo</h1>
+<div class="stats">
+  <p>Total de Posts: <%= @posts_count %></p>
+</div>
+
+<h2>Posts Recentes</h2>
+<ul>
+  <% @recent_posts.each do |post| %>
+    <li><%= post.title %> - <%= link_to "Editar", edit_post_path(post) %></li>
+  <% end %>
+</ul>

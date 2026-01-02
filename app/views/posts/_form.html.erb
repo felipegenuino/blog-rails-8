@@ -11,25 +11,34 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
+
 
   <div>
-    <%= form.label :summary, style: "display: block" %>
-    <%= form.textarea :summary %>
-  </div>
+  <%= form.label :title, "Título" %>
+  <%= form.text_field :title %>
+</div>
 
-  <div>
-    <%= form.label :content_type, style: "display: block" %>
-    <%= form.number_field :content_type %>
-  </div>
+<div>
+  <%= form.label :content_type, "Tipo de Conteúdo" %>
+  <%= form.select :content_type, Post.content_types.keys.map { |type| [type.titleize, type] } %>
+</div>
+
+<div>
+  <%= form.label :content, "Conteúdo (Arraste vídeos e imagens aqui)" %>
+  <%= form.rich_textarea :content %>
+</div>
+
+
+
+
+
+ 
 
   <div>
     <%= form.label :published_at, style: "display: block" %>
     <%= form.datetime_field :published_at %>
   </div>
+  
 
   <div>
     <%= form.submit %>
