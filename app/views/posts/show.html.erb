@@ -32,16 +32,34 @@
     </div>
 
     <%# Rodapé do Artigo com Ações Admin %>
+
     <div class="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between">
-      <%= link_to "← Voltar para o Blog", posts_path, class: "text-sm font-bold text-gray-900 hover:text-indigo-600 transition-colors" %>
-      
-      <% if authenticated? %>
-        <div class="flex gap-4">
-          <%= link_to "Editar este post", edit_post_path(@post), class: "text-sm font-semibold text-indigo-600" %>
-          <%= button_to "Apagar", @post, method: :delete, data: { confirm: "Tem certeza?" }, class: "text-sm font-semibold text-red-600" %>
-        </div>
-      <% end %>
-    </div>
+        <%# Lado Esquerdo: Voltar %>
+        <%= link_to posts_path, class: "group flex items-center gap-x-2 text-sm font-bold text-gray-600 hover:text-indigo-600 transition-all" do %>
+          <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+          Voltar para o Blog
+        <% end %>
+
+        <% if authenticated? %>
+          <%# Lado Direito: Ações com Flexbox para manter alinhado %>
+          <div class="flex items-center gap-x-6">
+            <%= link_to edit_post_path(@post), class: "flex items-center gap-x-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800" do %>
+              <i data-lucide="pencil" class="w-4 h-4"></i>
+              Editar
+            <% end %>
+
+            <%# O segredo é manter o button_to com form_class inline %>
+            <%= button_to @post, method: :delete, 
+                form_class: "inline-flex items-center",
+                class: "flex items-center gap-x-1.5 text-sm font-semibold text-red-600 hover:text-red-800 bg-transparent border-none p-0 cursor-pointer",
+                data: { confirm: "Tem certeza?" } do %>
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+              Apagar
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    
 
   </div>
 </div>

@@ -18,6 +18,16 @@
         @apply mt-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider;
     }
 
+    /* Remove a legenda automática (nome do arquivo) do Action Text */
+    .trix-content figcaption.attachment__caption {
+        display: none !important;
+    }
+
+    /* Garante que o form do button_to não quebre a linha no flex */
+    form.button_to {
+        @apply inline-flex;
+    }
+
     /* Garante que vídeos e embeds dentro do post fiquem no tamanho certo */
     .trix-content iframe {
         @apply w-full aspect-video rounded-2xl shadow-lg my-8;

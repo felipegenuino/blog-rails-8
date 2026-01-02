@@ -1,6 +1,17 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 import "controllers"
-
 import "trix"
 import "@rails/actiontext"
+
+// Importamos apenas o que é estritamente necessário
+import { createIcons, Pencil, Trash2, ArrowLeft, LayoutDashboard, Plus, Save, X } from "lucide"
+
+const initializeIcons = () => {
+    createIcons({
+        icons: { Pencil, Trash2, ArrowLeft, LayoutDashboard, Plus, Save, X }
+    })
+}
+
+// Escuta tanto o carregamento inicial quanto as navegações do Turbo
+document.addEventListener("turbo:load", initializeIcons)
+document.addEventListener("turbo:render", initializeIcons)

@@ -41,10 +41,19 @@
     </div>
   </div>
 
-  <div class="pt-5">
-    <div class="flex justify-end gap-x-3">
-      <%= link_to "Cancelar", posts_path, class: "rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
-      <%= form.submit "Salvar Conteúdo", class: "inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
-    </div>
+<div class="pt-5 border-t border-gray-200 mt-8">
+  <div class="flex justify-end gap-x-3">
+    <%# Botão Cancelar %>
+    <%= link_to posts_path, class: "flex items-center gap-x-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-all" do %>
+      <i data-lucide="x" class="w-4 h-4 text-gray-500"></i>
+      Cancelar
+    <% end %>
+
+    <%# Botão Salvar %>
+    <%= form.button class: "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all" do %>
+      <i data-lucide="save" class="w-4 h-4"></i>
+      <%= post.new_record? ? "Publicar Post" : "Salvar Alterações" %>
+    <% end %>
   </div>
+</div>
 <% end %>
