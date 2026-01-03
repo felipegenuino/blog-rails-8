@@ -30,6 +30,9 @@ import {
     Eye,
     ChevronDown,
     Search,
+    PlayCircle,
+    FileText,
+    ArrowRight,
     Link as LinkIcon, // Renomeado para não conflitar com palavras reservadas
     Twitter,
     Linkedin,
@@ -68,6 +71,9 @@ const initializeIcons = () => {
             Twitter,
             Linkedin,
             Youtube,
+            PlayCircle,
+            FileText,
+            ArrowRight,
         }
     })
 }

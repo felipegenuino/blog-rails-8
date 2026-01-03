@@ -15,6 +15,8 @@ class Post < ApplicationRecord
   # Validações básicas
   validates :title, presence: true
   
+  validates :youtube_url, format: { with: /youtube\.com|youtu\.be/, message: "deve ser um link válido do YouTube" }, allow_blank: true
+  
   # Enum para diferenciar o tipo de post
   enum :content_type, { article: 0, video: 1, note: 2 }
 

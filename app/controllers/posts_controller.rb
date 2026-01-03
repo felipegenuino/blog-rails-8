@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
  
-  # Permite que visitantes vejam os posts (index e show)
-  # Mas exige login para qualquer outra ação (new, edit, create, etc)
+
+  # Permite que visitantes vejam a lista e o post sem login
   allow_unauthenticated_access only: %i[ index show ]
   
+  # O restante (new, edit, create, update, destroy) exige login
   before_action :set_post, only: %i[ show edit update destroy ]
 
   
@@ -29,7 +30,7 @@ class PostsController < ApplicationController
 
    # Only allow a list of trusted parameters through.
     def post_params
-           params.require(:post).permit(:title, :summary, :content_type, :published_at, :content)
+           params.require(:post).permit(:title, :summary, :content_type, :published_at, :content, :youtube_url)
     end
 
   # POST /posts or /posts.json
