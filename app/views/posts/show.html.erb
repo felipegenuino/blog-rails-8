@@ -6,6 +6,8 @@
 <%# Layout de Artigo Centralizado %>
 <div class="py-12 sm:py-16">
   <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+    <%= youtube_embed(@post.youtube_url) %>
+
     
     <%# Cabeçalho do Post %>
     <nav class="mb-8 flex items-center gap-x-4 text-xs">

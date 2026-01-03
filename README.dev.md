@@ -1,60 +1,91 @@
-Essa é uma excelente visão de futuro para transformar o blog num produto rentável! Adicionar uma **Área VIP** com sistema de pagamentos e restrição de conteúdo é o caminho clássico para monetizar autoridade técnica.
+### Arquivo: `README.dev.md`
 
-Já atualizei o seu `projects.md` para incluir essa nova fase no Roadmap e na arquitetura. Aqui está o conteúdo atualizado para guardares:
+```markdown
+# 🛠 Configuração do Ambiente de Desenvolvimento
+
+Este projeto utiliza o **asdf** como gerenciador de versões para garantir que todos os desenvolvedores utilizem as mesmas versões de Ruby, Node e outras ferramentas.
+
+## 1. Pré-requisitos
+
+Antes de começar, certifique-se de ter o [Homebrew](https://brew.sh/) instalado (para usuários de macOS).
+
+## 2. Instalando o asdf
+
+Se ainda não tiver o `asdf` instalado:
+
+```bash
+brew install asdf
+
+```
+
+Adicione o asdf ao seu shell (`~/.zshrc` ou `~/.bashrc`):
+
+```bash
+echo '. "$(brew --prefix asdf)/libexec/asdf.sh"' >> ~/.zshrc
+source ~/.zshrc
+
+```
+
+## 3. Configurando Plugins e Versões
+
+Dentro da pasta do projeto, siga os passos abaixo para instalar as versões exatas definidas no arquivo `.tool-versions`:
+
+### Ruby
+
+```bash
+# Adicionar o plugin
+asdf plugin add ruby
+
+# Instalar a versão necessária
+asdf install ruby 3.3.4
+
+# Definir como local (caso não reconheça automaticamente)
+asdf set ruby 3.3.4
+
+```
+
+### Node.js (necessário para o Tailwind/Assets)
+
+```bash
+asdf plugin add nodejs
+asdf install nodejs latest
+asdf set nodejs latest
+
+```
+
+## 4. Inicializando o Projeto
+
+Com as versões configuradas, instale as dependências e prepare o banco de dados:
+
+```bash
+# Instalar dependências
+gem install bundler
+bundle install
+yarn install # ou npm install
+
+# Preparar banco de dados
+bin/rails db:prepare
+
+# Rodar o servidor de desenvolvimento
+bin/dev
+
+```
+
+## 5. Comandos Úteis
+
+* `asdf current`: Verifica as versões que estão ativas no momento.
+* `asdf install`: Instala todas as versões listadas no `.tool-versions` de uma vez.
+* `bin/dev`: Roda o Rails e o Tailwind v4 em modo watch simultaneamente.
 
 ---
 
-# 🚀 Project: Blog Rails 8 (Dev Log)
+```
 
-## 🎯 Objetivo
 
-Criar uma plataforma de conteúdo técnico focada em performance, SEO e experiência do desenvolvedor, utilizando as novas convenções do Rails 8.
 
-## 🛠 Stack Tecnológica
+### Por que isso é importante?
+Se amanhã você precisar formatar o Mac ou outro desenvolvedor for te ajudar, basta ele rodar `asdf install` e o `asdf` vai ler o arquivo `.tool-versions` e baixar tudo sozinho, sem erro de "versão não encontrada".
 
-* **Framework:** Rails 8.0.x
-* **Frontend:** Tailwind CSS
-* **Banco de Dados:** SQLite3 (Local) / Solid Cache
-* **Rich Text:** Action Text (Trix)
-* **Icons:** Lucide Icons
-* **SEO:** FriendlyId & Sitemap Generator
+**Quer que eu adicione uma seção sobre como testar os inputs do YouTube que a gente planejou ou prefere manter focado só no setup por enquanto?**
 
-## 🏗 Arquitetura & Decisões Técnicas
-
-* **Slugs Amigáveis:** Uso do `FriendlyId` para transformar `id` em `slug`.
-* **UI/UX Premium:** Design baseado em cards e bordas arredondadas (3xl).
-* **Controle de Acesso (Futuro):** Implementação de níveis de permissão (Free vs. VIP).
-* **Integração de Pagamentos:** Planeado o uso de Stripe API para subscrições.
-
-## 🗺 Roadmap
-
-### Fase 1: MVP & Fundações ✅
-
-* [x] Configuração inicial Rails 8.
-* [x] Autenticação básica e Admin Dashboard.
-* [x] Implementação do Action Text com upload de imagens.
-* [x] Padronização visual (Tailwind Layers).
-
-### Fase 2: SEO & Polimento 🔨
-
-* [ ] Gerar e validar Sitemap.xml.
-* [ ] Configuração de Meta Tags Dinâmicas.
-* [ ] Implementação de Testes Automatizados (Minitest).
-* [ ] Deploy em produção (Render/Fly.io).
-
-### Fase 3: Área VIP & Monetização 💰
-
-* [ ] **Sistema de User Roles:** Diferenciar leitores comuns de membros VIP.
-* [ ] **Conteúdo Restrito:** Criar decorators/helpers para esconder partes do post ou tutoriais inteiros.
-* [ ] **Paywall:** Integração com Stripe para subscrições mensais/anuais.
-* [ ] **Dashboard do Aluno:** Área exclusiva para acesso a tutoriais premium.
-
----
-
-### O que isso muda tecnicamente para ti:
-
-1. **Devise (Autenticação):** No futuro, vamos expandir o uso do Devise (ou do sistema de autenticação nativo do Rails 8) para aceitar registos de leitores, não apenas do admin.
-2. **Pundit ou CanCanCan:** Vamos precisar de uma destas *gems* para gerir as permissões (ex: "Só quem é VIP pode ver este vídeo").
-3. **Stripe:** É a melhor escolha para Rails. Eles têm uma gem oficial fantástica que lida com cartões de crédito e subscrições de forma muito segura.
-
-**Boa viagem com o MacBook hoje!** Com este `projects.md` atualizado, tens um plano de negócio real para o teu blog. Quando estiveres pronto para codar a restrição de conteúdo, avisa!
+```

@@ -32,7 +32,8 @@ import {
     Search,
     Link as LinkIcon, // Renomeado para não conflitar com palavras reservadas
     Twitter,
-    Linkedin
+    Linkedin,
+    Youtube,
 } from "lucide"
 
 // Função para inicializar os ícones na tela
@@ -65,7 +66,8 @@ const initializeIcons = () => {
             Search,
             Link: LinkIcon,
             Twitter,
-            Linkedin
+            Linkedin,
+            Youtube,
         }
     })
 }
