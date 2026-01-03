@@ -21,8 +21,9 @@ class PostsController < ApplicationController
     # Tenta buscar pelo slug. Se falhar, tenta pelo ID (para links antigos).
     @post = Post.friendly.find(params[:id])
     
-    unless current_user&.admin?
-        ahoy.track "Viewed Post", post_id: @post.id
+    # No Rails 8, usamos geralmente Current.user ou apenas 'authenticated?'
+    unless authenticated? && Current.user&.admin?
+      ahoy.track "Viewed Post", post_id: @post.id
     end
     
   rescue ActiveRecord::RecordNotFound
