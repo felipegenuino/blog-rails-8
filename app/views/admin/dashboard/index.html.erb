@@ -9,10 +9,21 @@
   </header>
   
   <main>
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"> 
       <%# Stats Cards %>
-      <dl class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      <dl class="grid grid-cols-1 gap-5 sm:grid-cols-4">
+
+      <div class="relative overflow-hidden rounded-2xl bg-white px-4 py-5 border border-gray-100 sm:p-6 transition-hover">
+  <dt>
+    <div class="absolute rounded-md bg-blue-50 p-3">
+      <i data-lucide="eye" class="h-6 w-6 text-blue-600"></i>
+    </div>
+    <p class="ml-16 truncate text-sm font-bold text-gray-500 uppercase tracking-wider">Leituras Totais</p>
+  </dt>
+  <dd class="ml-16 flex items-baseline">
+    <p class="text-3xl font-black text-gray-900"><%= @total_views %></p>
+  </dd>
+</div>
         <div class="relative overflow-hidden rounded-2xl bg-white px-4 py-5   border border-gray-100 sm:p-6 transition-hover ">
           <dt>
             <div class="absolute rounded-md bg-indigo-50 p-3">

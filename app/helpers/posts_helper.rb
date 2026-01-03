@@ -1,9 +1,9 @@
 module PostsHelper
   def youtube_thumbnail_url(url, quality = 'maxresdefault')
     return nil if url.blank?
-    video_id = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&? \/\s]{11})/)[1]
-    "https://img.youtube.com/vi/#{video_id}/#{quality}.jpg"
-  rescue
+    # Regex mais robusta
+    match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&? \/\s]{11})/)
+    return "https://img.youtube.com/vi/#{match[1]}/#{quality}.jpg" if match
     nil
   end
 

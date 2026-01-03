@@ -18,7 +18,11 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @post = Post.find_by!(title: params[:id].humanize) # Ou a lógica de slug que você definiu
+    ahoy.track "Viewed Post", post_id: @post.id
   end
+
+  
 
   # GET /posts/new
   def new
