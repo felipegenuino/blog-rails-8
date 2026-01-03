@@ -21,8 +21,11 @@ class PostsController < ApplicationController
     # Tenta buscar pelo slug. Se falhar, tenta pelo ID (para links antigos).
     @post = Post.friendly.find(params[:id])
     
-    ahoy.track "Viewed Post", post_id: @post.id
-    rescue ActiveRecord::RecordNotFound
+    unless current_user&.admin?
+        ahoy.track "Viewed Post", post_id: @post.id
+    end
+    
+  rescue ActiveRecord::RecordNotFound
       
     # Se não achar nada, manda pra home com um aviso em vez de dar erro 500
     redirect_to posts_path, alert: "Conteúdo não encontrado."
