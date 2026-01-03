@@ -12,8 +12,8 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     @posts = Post.all.order(created_at: :desc)
-    @featured_post = @posts.first
-    @remaining_posts = @posts.drop(1)
+    @featured_post = @posts.first     # O post mais novo
+    @remaining_posts = @posts.drop(1) # Todos os outros menos o primeiro
   end
 
   # GET /posts/1 or /posts/1.json
