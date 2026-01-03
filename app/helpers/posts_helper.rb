@@ -1,10 +1,9 @@
 module PostsHelper
   def youtube_thumbnail_url(url, quality = 'maxresdefault')
     return nil if url.blank?
-    # Regex mais robusta
-    match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&? \/\s]{11})/)
-    return "https://img.youtube.com/vi/#{match[1]}/#{quality}.jpg" if match
-    nil
+    video_id = url.match(/(?:v=|youtu\.be\/)([^&?]+)/)[1] rescue nil
+    # Se o video_id for nil, ele vai cair no else do seu index.html.erb
+    "https://img.youtube.com/vi/#{video_id}/#{quality}.jpg" if video_id
   end
 
   def youtube_embed(url)

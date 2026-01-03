@@ -1,10 +1,10 @@
 class Post < ApplicationRecord
 
   extend FriendlyId
+  # Isso diz ao Rails para transformar o título em slug automaticamente
   friendly_id :title, use: :slugged
 
-  # Isso garante que se o título mudar, o slug não mude (bom para SEO)
-  # Ou você pode configurar para atualizar sempre.
+  # Opcional: Se você mudar o título, ele atualiza o slug
   def should_generate_new_friendly_id?
     title_changed?
   end
@@ -19,5 +19,7 @@ class Post < ApplicationRecord
   
   # Enum para diferenciar o tipo de post
   enum :content_type, { article: 0, video: 1, note: 2 }
+
+ 
 
 end

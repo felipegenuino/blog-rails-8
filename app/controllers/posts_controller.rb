@@ -16,12 +16,17 @@ class PostsController < ApplicationController
     @remaining_posts = @posts.drop(1) # Todos os outros menos o primeiro
   end
 
-  # GET /posts/1 or /posts/1.json
-  def show
-    @post = Post.find_by!(title: params[:id].humanize) # Ou a lógica de slug que você definiu
+   # app/controllers/posts_controller.rb
+  def show 
+    # Tenta buscar pelo slug. Se falhar, tenta pelo ID (para links antigos).
+    @post = Post.friendly.find(params[:id])
+    
     ahoy.track "Viewed Post", post_id: @post.id
+    rescue ActiveRecord::RecordNotFound
+      
+    # Se não achar nada, manda pra home com um aviso em vez de dar erro 500
+    redirect_to posts_path, alert: "Conteúdo não encontrado."
   end
-
   
 
   # GET /posts/new
