@@ -2,88 +2,59 @@
 
 @layer components {
 
-    /* --- Container Principal do Post --- */
-    .trix-content {
-        @apply leading-relaxed text-gray-800 text-lg;
+    /* Aplicamos o estilo diretamente aos seletores do Trix */
+    .trix-content,
+    trix-editor {
+        @apply leading-relaxed text-gray-800 block;
+
+        /* Estilização dos elementos internos */
+        & h1 {
+            @apply text-3xl font-black text-gray-900 mb-6 mt-10 block;
+        }
+
+        & h2 {
+            @apply text-2xl font-bold text-gray-900 mb-4 mt-8 block;
+        }
+
+        & p {
+            @apply mb-5 block;
+        }
+
+        & ul {
+            @apply list-disc ml-8 mb-5 block;
+        }
+
+        & ol {
+            @apply list-decimal ml-8 mb-5 block;
+        }
+
+        & a {
+            @apply text-blue-600 underline decoration-blue-200 underline-offset-4;
+        }
+
+        & blockquote {
+            @apply border-l-4 border-gray-300 pl-4 italic my-6 text-gray-600;
+        }
+
+        & pre {
+            @apply bg-gray-100 p-4 rounded-lg mb-5 font-mono text-sm overflow-x-auto block;
+        }
+
+        & img {
+            @apply max-w-full h-auto rounded-lg;
+        }
+
+        & .attachment--preview {
+            @apply my-8 text-center;
+
+            & figcaption {
+                @apply mt-2 text-sm text-gray-500 italic;
+            }
+        }
     }
 
-    /* --- Títulos (Hierarquia Visual) --- */
-    .trix-content h1 {
-        @apply text-3xl font-black tracking-tight text-gray-900 mb-6 mt-10;
-    }
-
-    .trix-content h2 {
-        @apply text-2xl font-bold tracking-tight text-gray-900 mb-4 mt-8 border-b border-gray-100 pb-2;
-    }
-
-    .trix-content h3 {
-        @apply text-xl font-bold text-gray-800 mb-3 mt-6;
-    }
-
-    /* --- Parágrafos e Listas --- */
-    .trix-content p {
-        @apply mb-5;
-    }
-
-    .trix-content ul {
-        @apply list-disc list-inside mb-6 space-y-2 pl-4;
-    }
-
-    .trix-content ol {
-        @apply list-decimal list-inside mb-6 space-y-2 pl-4;
-    }
-
-    .trix-content li {
-        @apply text-gray-700;
-    }
-
-    /* --- Links, Citações e Código --- */
-    .trix-content a {
-        @apply text-indigo-600 underline decoration-indigo-200 underline-offset-4 font-medium hover:text-indigo-500 hover:decoration-indigo-500 transition-all;
-    }
-
-    .trix-content blockquote {
-        @apply border-l-4 border-indigo-500 pl-6 italic text-gray-700 my-8 py-2 bg-indigo-50/30 rounded-r-xl;
-    }
-
-    .trix-content pre {
-        @apply bg-gray-900 text-gray-100 p-5 rounded-2xl my-6 overflow-x-auto font-mono text-sm shadow-inner;
-    }
-
-    .trix-content code {
-        @apply bg-gray-100 text-indigo-600 px-1.5 py-0.5 rounded-md font-mono text-[0.9em] border border-gray-200;
-    }
-
-    /* --- Imagens, Vídeos e Anexos (Aspecto de Portal) --- */
-    .trix-content figure {
-        @apply my-10 p-0 border-none text-center;
-    }
-
-    .trix-content img {
-        @apply mx-auto rounded-3xl border border-gray-100 shadow-lg transition-transform hover:scale-[1.01];
-    }
-
-    .trix-content figcaption {
-        @apply mt-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider;
-    }
-
-    /* Remove a legenda automática (nome do arquivo) do Action Text */
-    .trix-content figcaption.attachment__caption {
-        display: none !important;
-    }
-
-    /* Garante que vídeos e embeds fiquem no tamanho certo */
-    .trix-content iframe {
-        @apply w-full aspect-video rounded-3xl shadow-lg my-8;
-    }
-
-    /* --- Ajustes Globais do App --- */
-    form.button_to {
-        @apply inline-flex;
-    }
-
-    /* Linha Horizontal (Divider) */
-    .trix-content hr {
-        @apply my-12 border-t-2 border-gray-100;
+    /* Estilo específico para a caixa do editor */
+    trix-editor {
+        @apply p-4 min-h-[300px] border border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none;
     }
 }

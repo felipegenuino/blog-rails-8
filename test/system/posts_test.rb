@@ -44,4 +44,14 @@ class PostsTest < ApplicationSystemTestCase
 
     assert_text "Post was successfully destroyed"
   end
+
+  # test/system/posts_test.rb
+    test "criando um novo post com sucesso" do
+      visit new_post_path
+      fill_in "Título", with: "Meu Primeiro Teste"
+      find("trix-editor").set("Conteúdo rico aqui")
+      click_on "Salvar"
+      
+      assert_text "Post criado com sucesso"
+    end
 end
