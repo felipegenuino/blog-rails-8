@@ -1,30 +1,21 @@
-<%# app/views/posts/_post_card.html.erb %>
-<article class="group bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border-b-4 border-b-transparent hover:border-b-blue-500">
-  <%# Área Visual %>
-  <div class="aspect-video bg-gray-100 flex items-center justify-center overflow-hidden relative">
+<article class="group bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
+  <div class="aspect-video bg-gray-100 relative overflow-hidden">
     <% if post.youtube_url.present? %>
-      <% video_id = post.youtube_url.match(/(?:v=|youtu\.be\/)([^&?]+)/)[1] rescue nil %>
-      <img src="https://img.youtube.com/vi/<%= video_id %>/mqdefault.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="<%= post.title %>">
+      <img src="<%= youtube_thumbnail_url(post.youtube_url, 'mqdefault') %>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
     <% else %>
-      <i data-lucide="file-text" class="w-12 h-12 text-gray-300"></i>
+      <div class="w-full h-full flex items-center justify-center bg-gray-50 text-gray-300">
+        <i data-lucide="file-text" class="w-10 h-10"></i>
+      </div>
     <% end %>
   </div>
 
-  <%# Conteúdo %>
-  <div class="p-6 flex flex-col flex-grow">
-    <h2 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+  <div class="p-6">
+    <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600">
       <%= link_to post.title, post %>
     </h2>
-    <div class="text-gray-500 line-clamp-3 mb-6 flex-grow text-sm">
-      <%= strip_tags(post.content.to_s).truncate(120) %>
-    </div>
-    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-      <%= link_to "Ler mais", post, class: "text-sm font-bold text-gray-900 flex items-center gap-1" %>
-      <% if authenticated? %>
-        <%= link_to edit_post_path(post), class: "text-gray-400 hover:text-amber-500" do %>
-          <i data-lucide="pencil" class="w-4 h-4"></i>
-        <% end %>
-      <% end %>
-    </div>
+    <p class="text-gray-500 text-sm line-clamp-2 mb-4">
+      <%= strip_tags(post.content.to_s).truncate(100) %>
+    </p>
+    <%= link_to "Ler mais", post, class: "text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all" %>
   </div>
 </article>
