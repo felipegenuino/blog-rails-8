@@ -2,13 +2,11 @@
 <%# Usamos @post.summary aqui já que ele existe no seu form %>
 <% meta_description @post.summary.presence || truncate(@post.content.to_plain_text, length: 160) %>
 
-
 <%# Layout de Artigo Centralizado %>
 <div class="py-12 sm:py-16">
   <div class="mx-auto max-w-3xl text-base leading-7 text-gray-700">
     <%= youtube_embed(@post.youtube_url) %>
 
-    
     <%# Cabeçalho do Post %>
     <nav class="mb-8 flex items-center gap-x-4 text-xs">
       <time datetime="<%= @post.created_at %>" class="text-gray-500">
@@ -32,63 +30,78 @@
 
     <%# Conteúdo Principal (Action Text) %>
     <div class="mt-10">
-      <%# A classe prose-img:rounded-3xl aplica o arredondamento em todas as imagens do post %>
       <div class="prose prose-lg prose-indigo max-w-none trix-content prose-img:rounded-3xl prose-img:shadow-lg prose-figcaption:text-center prose-figcaption:text-sm prose-figcaption:text-gray-500">
-      <%= @post.content %>
+        <%= @post.content %>
       </div>
     </div>
 
     <%# Rodapé do Artigo com Ações Admin %>
-
     <div class="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between">
-        <%# Lado Esquerdo: Voltar %>
-        <%= link_to posts_path, class: "group flex items-center gap-x-2 text-sm font-bold text-gray-600 hover:text-indigo-600 transition-all" do %>
-          <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
-          Voltar para o Blog
-        <% end %>
+      <%# Lado Esquerdo: Voltar %>
+      <%= link_to posts_path, class: "group flex items-center gap-x-2 text-sm font-bold text-gray-600 hover:text-indigo-600 transition-all" do %>
+        <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+        Voltar para o Blog
+      <% end %>
 
-        <% if authenticated? %>
-          <%# Lado Direito: Ações com Flexbox para manter alinhado %>
-          <div class="flex items-center gap-x-6">
-            <%= link_to edit_post_path(@post), class: "flex items-center gap-x-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800" do %>
-              <i data-lucide="pencil" class="w-4 h-4"></i>
-              Editar
-            <% end %>
+      <% if authenticated? && Current.user.admin? %>
+        <%# Lado Direito: Ações Admin %>
+        <div class="flex items-center gap-x-6">
+          <%= link_to edit_post_path(@post), class: "flex items-center gap-x-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800" do %>
+            <i data-lucide="pencil" class="w-4 h-4"></i>
+            Editar
+          <% end %>
 
-            <%# O segredo é manter o button_to com form_class inline %>
-            <%= button_to @post, method: :delete, 
-                form_class: "inline-flex items-center",
-                class: "flex items-center gap-x-1.5 text-sm font-semibold text-red-600 hover:text-red-800 bg-transparent border-none p-0 cursor-pointer",
-                data: { confirm: "Tem certeza?" } do %>
-              <i data-lucide="trash-2" class="w-4 h-4"></i>
-              Apagar
-            <% end %>
-          </div>
+          <%= button_to @post, method: :delete, 
+              form_class: "inline-flex items-center",
+              class: "flex items-center gap-x-1.5 text-sm font-semibold text-red-600 hover:text-red-800 bg-transparent border-none p-0 cursor-pointer",
+              data: { confirm: "Tem certeza?" } do %>
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+            Apagar
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  
+    <%# Compartilhamento %>
+    <div class="mt-10 pt-10 border-t border-gray-100">
+      <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Compartilhe este artigo</p>
+      <div class="flex gap-4">
+        <a href="https://twitter.com/intent/tweet?url=<%= request.original_url %>&text=<%= @post.title %>" 
+           target="_blank" class="p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all">
+          <i data-lucide="twitter" class="w-5 h-5"></i>
+        </a>
+        
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= request.original_url %>" 
+           target="_blank" class="p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all">
+          <i data-lucide="linkedin" class="w-5 h-5"></i>
+        </a>
+
+        <button onclick="navigator.clipboard.writeText('<%= request.original_url %>')" 
+                class="p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 transition-all" title="Copiar Link">
+          <i data-lucide="link" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <%# --- SEÇÃO DE COMENTÁRIOS --- %>
+    <section id="comments-section" class="mt-16 pt-10 border-t border-gray-100">
+      <h3 class="text-2xl font-black tracking-tight text-gray-900 mb-8">
+        Comentários (<%= @post.comments.count %>)
+      </h3>
+      
+      <div id="comments" class="space-y-6 mb-12">
+        <% if @post.comments.any? %>
+          <%= render @post.comments %>
+        <% else %>
+          <p class="text-gray-500 italic">Ninguém comentou ainda. Seja o primeiro!</p>
         <% end %>
       </div>
-    
-      <div class="mt-10 pt-10 border-t border-gray-100">
-  <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Compartilhe este artigo</p>
-  <div class="flex gap-4">
-    <%# Twitter/X %>
-    <a href="https://twitter.com/intent/tweet?url=<%= request.original_url %>&text=<%= @post.title %>" 
-       target="_blank" class="p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all">
-      <i data-lucide="twitter" class="w-5 h-5"></i>
-    </a>
-    
-    <%# LinkedIn %>
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<%= request.original_url %>" 
-       target="_blank" class="p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-all">
-      <i data-lucide="linkedin" class="w-5 h-5"></i>
-    </a>
 
-    <%# Botão Copiar Link %>
-    <button onclick="navigator.clipboard.writeText('<%= request.original_url %>')" 
-            class="p-3 rounded-xl bg-gray-50 text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 transition-all" title="Copiar Link">
-      <i data-lucide="link" class="w-5 h-5"></i>
-    </button>
-  </div>
-</div>
+      <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 shadow-sm">
+        <h4 class="text-lg font-bold text-gray-900 mb-4 text-center sm:text-left">Deixe sua opinião</h4>
+        <%= render "comments/form" %>
+      </div>
+    </section>
 
   </div>
 </div>
