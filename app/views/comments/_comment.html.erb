@@ -1,19 +1,30 @@
-<div id="<%= dom_id comment %>" class="p-4 bg-white rounded-lg border border-gray-100 mb-4 shadow-sm">
-  <div class="flex items-center justify-between mb-2">
-    <div class="flex items-center gap-2">
-      <span class="font-bold text-gray-900 text-sm"><%= comment.user.email_address %></span>
-      <span class="text-xs text-gray-400">• <%= time_ago_in_words(comment.created_at) %> atrás</span>
+<div id="<%= dom_id comment %>" class="p-6 bg-white rounded-3xl border border-gray-100 mb-4 shadow-sm group">
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-3">
+      <%# Avatar Placeholder - Podemos trocar pela imagem do GitHub depois %>
+      <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs uppercase">
+        <%= comment.user.email_address[0..1] %>
+      </div>
+      
+      <div class="flex flex-col">
+        <span class="font-bold text-gray-900 text-sm"><%= comment.user.email_address %></span>
+        <span class="text-xs text-gray-400"><%= time_ago_in_words(comment.created_at) %> atrás</span>
+      </div>
     </div>
 
     <%# Botão de excluir condicional %>
     <% if authenticated? && (comment.user == Current.user || Current.user.admin?) %>
-      <%= button_to post_comment_path(@post, comment), 
+      <%= button_to [@post, comment], 
           method: :delete, 
-          data: { confirm: "Tem certeza?" },
-          class: "text-red-500 hover:text-red-700 text-xs" do %>
-        <i class="bi bi-trash"></i> Excluir
+          data: { turbo_confirm: "Tem certeza que deseja apagar seu comentário?" },
+          class: "opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-700 text-xs flex items-center gap-1 p-2 rounded-lg hover:bg-red-50" do %>
+        <i data-lucide="trash-2" class="w-4 h-4"></i>
+        Excluir
       <% end %>
     <% end %>
   </div>
-  <p class="text-gray-700 text-sm"><%= comment.body %></p>
+  
+  <p class="text-gray-700 text-sm leading-relaxed pl-11">
+    <%= comment.body %>
+  </p>
 </div>
