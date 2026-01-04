@@ -1,0 +1,19 @@
+<div id="<%= dom_id comment %>" class="p-4 bg-white rounded-lg border border-gray-100 mb-4 shadow-sm">
+  <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center gap-2">
+      <span class="font-bold text-gray-900 text-sm"><%= comment.user.email_address %></span>
+      <span class="text-xs text-gray-400">• <%= time_ago_in_words(comment.created_at) %> atrás</span>
+    </div>
+
+    <%# Botão de excluir condicional %>
+    <% if authenticated? && (comment.user == Current.user || Current.user.admin?) %>
+      <%= button_to post_comment_path(@post, comment), 
+          method: :delete, 
+          data: { confirm: "Tem certeza?" },
+          class: "text-red-500 hover:text-red-700 text-xs" do %>
+        <i class="bi bi-trash"></i> Excluir
+      <% end %>
+    <% end %>
+  </div>
+  <p class="text-gray-700 text-sm"><%= comment.body %></p>
+</div>

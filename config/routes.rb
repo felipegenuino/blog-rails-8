@@ -1,33 +1,26 @@
 Rails.application.routes.draw do
+  # 1. Removido o 'resources :comments' que estava aqui no topo sozinho.
+
+  # Rotas Administrativas
   namespace :admin do
     get "dashboard", to: "dashboard#index"
-    root to: "dashboard#index" # Faz /admin cair direto no dashboard
-    # get "dashboard/index"
+    root to: "dashboard#index"
   end
   
+  # Autenticação Nativa Rails 8
   resource :session
   resources :passwords, param: :token
-  resources :posts
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+ 
+  # Posts e seus Comentários Aninhados
+  resources :posts do
+    resources :comments, only: [ :create, :destroy ]
+  end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health Check e Root
   get "up" => "rails/health#show", as: :rails_health_check
+  root "posts#index"
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-   root "posts#index"
-
-
-
-   # Rota que o OmniAuth usa internamente
-    get "auth/:provider/callback", to: "omniauth_callbacks#github"
-    
-    # Rota de falha (caso o usuário negue o acesso)
-    get "auth/failure", to: redirect("/login")
-
-    
+  # OmniAuth / Login Social
+  get "auth/:provider/callback", to: "omniauth_callbacks#github"
+  get "auth/failure", to: redirect("/login")
 end

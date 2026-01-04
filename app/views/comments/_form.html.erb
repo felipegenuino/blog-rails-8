@@ -1,0 +1,13 @@
+<% if authenticated? %>
+    <%= form_with(model: [ @post, Comment.new ]) do |f| %>
+      <%= f.text_area :body, placeholder: "Escreva algo...", class: "w-full border rounded p-2" %>
+      <%= f.submit "Comentar", class: "bg-blue-600 text-white px-4 py-2 rounded mt-2" %>
+    <% end %>
+<% else %>
+  <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-lg text-center mt-8">
+    <p class="text-indigo-900 mb-4">Participe da conversa!</p>
+    <%= button_to "/auth/github", data: { turbo: false }, class: "bg-gray-900 text-white px-6 py-2 rounded inline-flex items-center gap-2" do %>
+      Entrar com GitHub para comentar
+    <% end %>
+  </div>
+<% end %>

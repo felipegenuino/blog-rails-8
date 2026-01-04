@@ -1,4 +1,7 @@
 class Post < ApplicationRecord
+  has_many :comments, dependent: :destroy
+
+  
 
   extend FriendlyId
   # Isso diz ao Rails para transformar o título em slug automaticamente
@@ -20,6 +23,6 @@ class Post < ApplicationRecord
   # Enum para diferenciar o tipo de post
   enum :content_type, { article: 0, video: 1, note: 2 }
 
- 
+  
 
 end
