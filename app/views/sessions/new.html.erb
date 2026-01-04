@@ -60,17 +60,20 @@
               class: "flex w-full justify-center rounded-xl bg-indigo-600 px-3 py-2.5 text-sm font-bold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all cursor-pointer" %>
         </div>
 
-          <div class="mt-6 border-t pt-6">
-          <%= button_to auth_at_provider_path(provider: :github), 
-              data: { turbo: false }, 
-              class: "w-full flex justify-center items-center gap-2 bg-gray-900 text-white py-2 px-4 rounded hover:bg-gray-800" do %>
-            <i class="bi bi-github"></i> Entrar com GitHub
-          <% end %>
-        </div>
+         
 
-        
+
       <% end %>
 
+      <div class="mt-6 border-t pt-6">
+        <%= button_to "/auth/github", 
+            method: :post, 
+            data: { turbo: false }, 
+            class: "seu-estilo-aqui" do %>
+          Entrar com GitHub
+        <% end %>
+      </div>
+      
     </div>
 
     <p class="mt-10 text-center text-sm text-gray-500">

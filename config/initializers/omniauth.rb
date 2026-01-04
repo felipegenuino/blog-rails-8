@@ -3,5 +3,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :github, 
     Rails.application.credentials.dig(:github, :client_id), 
     Rails.application.credentials.dig(:github, :client_secret),
-    scope: "user:email"
+    {
+      scope: "user:email",
+      # Isso ajuda a evitar erros de SSL em alguns ambientes de dev
+      provider_ignores_state: false 
+    }
 end

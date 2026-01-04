@@ -30,7 +30,7 @@ class PostsController < ApplicationController
 
     
     # No Rails 8, usamos geralmente Current.user ou apenas 'authenticated?'
-    unless authenticated? && Current.user&.admin?
+    unless authenticated? && Current.user.admin?
       ahoy.track "Viewed Post", post_id: @post.id
     end
     
