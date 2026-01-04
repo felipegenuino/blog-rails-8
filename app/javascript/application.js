@@ -37,7 +37,7 @@ import {
     Twitter,
     Linkedin,
     Youtube,
-    Sparkles
+    Sparkles,   
 } from "lucide"
 
 // Função para inicializar os ícones na tela
@@ -75,7 +75,7 @@ const initializeIcons = () => {
             PlayCircle,
             FileText,
             ArrowRight,
-            Sparkles
+            Sparkles,  
         }
     })
 }

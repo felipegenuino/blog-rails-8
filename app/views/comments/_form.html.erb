@@ -1,12 +1,13 @@
-<%= form_with(model: [ @post, Comment.new ], data: { turbo: false }, class: "space-y-4") do |f| %>
-  <%# Adicionamos data: { turbo: false } para testar se é o Turbo que está interferindo %>
-  <div>
-    <%= f.text_area :body, rows: 3, required: true,
-        placeholder: "Escreva seu comentário aqui...",
-        class: "block w-full rounded-2xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm" %>
-  </div>
+<div id="new_comment_form">
+<%= form_with(model: [ @post, Comment.new ], class: "space-y-4") do |f| %>
+       <div>
+        <%= f.text_area :body, rows: 3, required: true,
+            placeholder: "Escreva seu comentário aqui...",
+            class: "block w-full rounded-2xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm" %>
+      </div>
 
-  <div class="flex justify-end">
-    <%= f.submit "Publicar Comentário", class: "cursor-pointer rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-indigo-500 transition-all" %>
-  </div>
-<% end %>
+      <div class="flex justify-end">
+        <%= f.submit "Publicar Comentário", class: "cursor-pointer rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-indigo-500 transition-all" %>
+      </div>
+    <% end %>
+</div>

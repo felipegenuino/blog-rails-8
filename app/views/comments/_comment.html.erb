@@ -1,30 +1,47 @@
-<div id="<%= dom_id comment %>" class="p-6 bg-white rounded-3xl border border-gray-100 mb-4 shadow-sm group">
-  <div class="flex items-center justify-between mb-3">
-    <div class="flex items-center gap-3">
-      <%# Avatar Placeholder - Podemos trocar pela imagem do GitHub depois %>
-      <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs uppercase">
-        <%= comment.user.email_address[0..1] %>
+<div id="<%= dom_id comment %>" class="flex items-start gap-4 p-6 bg-white rounded-3xl border border-gray-100 mb-6 shadow-sm group hover:border-indigo-100 transition-colors">
+  
+  <%# Avatar do Usuário %>
+  <div class="flex-shrink-0">
+  
+    <div class="h-10 w-10 overflow-hidden rounded-full bg-gray-100 border-2 border-white shadow-sm ring-1 ring-gray-100">
+        <% if comment.user.avatar_url.present? %>
+          <%# Se tiver a URL, mostra a imagem %>
+          <%= image_tag comment.user.avatar_url, class: "h-full w-full object-cover", alt: "Avatar" %>
+        <% else %>
+          <%# Se não tiver, mostra o "GU" %>
+          <div class="h-full w-full flex items-center justify-center text-indigo-700 font-bold text-xs uppercase bg-indigo-50">
+            <%= comment.user.email_address[0..1] %>
+          </div>
+        <% end %>
+    </div>
+  </div>
+
+  <%# Conteúdo do Comentário %>
+  <div class="flex-1 min-w-0">
+    <div class="flex items-center justify-between mb-1">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-gray-900 text-sm truncate">
+          <%= comment.user.email_address %>
+        </span>
+        <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">•</span>
+        <span class="text-xs text-gray-400">
+          <%= time_ago_in_words(comment.created_at) %> atrás
+        </span>
       </div>
-      
-      <div class="flex flex-col">
-        <span class="font-bold text-gray-900 text-sm"><%= comment.user.email_address %></span>
-        <span class="text-xs text-gray-400"><%= time_ago_in_words(comment.created_at) %> atrás</span>
-      </div>
+
+      <%# Botão de excluir (visível apenas para o dono ou admin no hover) %>
+      <% if authenticated? && (comment.user == Current.user || Current.user.admin?) %>
+        <%= button_to [@post, comment], 
+            method: :delete, 
+            data: { turbo_confirm: "Deseja apagar este comentário?" },
+            class: "opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-600 p-1 rounded-lg hover:bg-red-50" do %>
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+        <% end %>
+      <% end %>
     </div>
 
-    <%# Botão de excluir condicional %>
-    <% if authenticated? && (comment.user == Current.user || Current.user.admin?) %>
-      <%= button_to [@post, comment], 
-          method: :delete, 
-          data: { turbo_confirm: "Tem certeza que deseja apagar seu comentário?" },
-          class: "opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-700 text-xs flex items-center gap-1 p-2 rounded-lg hover:bg-red-50" do %>
-        <i data-lucide="trash-2" class="w-4 h-4"></i>
-        Excluir
-      <% end %>
-    <% end %>
+    <div class="text-gray-700 text-sm leading-relaxed break-words">
+      <%= comment.body %>
+    </div>
   </div>
-  
-  <p class="text-gray-700 text-sm leading-relaxed pl-11">
-    <%= comment.body %>
-  </p>
 </div>
