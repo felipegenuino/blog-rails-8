@@ -85,23 +85,26 @@
 
     <%# --- SEÇÃO DE COMENTÁRIOS --- %>
     <section id="comments-section" class="mt-16 pt-10 border-t border-gray-100">
-      <h3 class="text-2xl font-black tracking-tight text-gray-900 mb-8">
-        Comentários (<%= @post.comments.count %>)
-      </h3>
-      
-      <div id="comments" class="space-y-6 mb-12">
-        <% if @post.comments.any? %>
-          <%= render @post.comments %>
-        <% else %>
-          <p class="text-gray-500 italic">Ninguém comentou ainda. Seja o primeiro!</p>
-        <% end %>
-      </div>
+        <h3 class="text-2xl font-black tracking-tight text-gray-900 mb-8">
+          Comentários (<%= @post.comments.count %>)
+        </h3>
+        
+        <div id="comments" class="space-y-6 mb-12">
+          <%# Usamos um loop explícito para garantir que o Rails tente renderizar cada um %>
+          <% if @post.comments.any? %>
+            <% @post.comments.order(created_at: :desc).each do |comment| %>
+              <%= render partial: "comments/comment", locals: { comment: comment } %>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">Ninguém comentou ainda. Seja o primeiro!</p>
+          <% end %>
+        </div>
 
-      <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 shadow-sm">
-        <h4 class="text-lg font-bold text-gray-900 mb-4 text-center sm:text-left">Deixe sua opinião</h4>
-        <%= render "comments/form" %>
-      </div>
-    </section>
+        <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 shadow-sm">
+          <h4 class="text-lg font-bold text-gray-900 mb-4">Deixe sua opinião</h4>
+          <%= render "comments/form" %>
+        </div>
+      </section>
 
   </div>
 </div>

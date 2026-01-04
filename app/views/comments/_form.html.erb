@@ -1,19 +1,12 @@
-<%= form_with(model: [ @post, Comment.new ], local: true, class: "space-y-4") do |f| %>
+<%= form_with(model: [ @post, Comment.new ], data: { turbo: false }, class: "space-y-4") do |f| %>
+  <%# Adicionamos data: { turbo: false } para testar se é o Turbo que está interferindo %>
   <div>
-    <%= f.text_area :body, rows: 3, 
-        placeholder: "O que você achou deste post?",
-        class: "block w-full rounded-2xl border-gray-300 shadow-sm focus:ring-indigo-600 focus:border-indigo-600 sm:text-sm" %>
+    <%= f.text_area :body, rows: 3, required: true,
+        placeholder: "Escreva seu comentário aqui...",
+        class: "block w-full rounded-2xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm" %>
   </div>
 
-  <div class="flex justify-end mt-4">
-    <% if authenticated? %>
-      <%= f.submit "Publicar Comentário", 
-          class: "cursor-pointer rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-indigo-500 transition-all" %>
-    <% else %>
-      <%= link_to "/auth/github", data: { turbo: false }, 
-          class: "flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-gray-800 transition-all" do %>
-        Entrar com GitHub para comentar
-      <% end %>
-    <% end %>
+  <div class="flex justify-end">
+    <%= f.submit "Publicar Comentário", class: "cursor-pointer rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-indigo-500 transition-all" %>
   </div>
 <% end %>
