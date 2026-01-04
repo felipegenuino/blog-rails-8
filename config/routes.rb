@@ -20,4 +20,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
    root "posts#index"
+
+
+
+   # Rota que o OmniAuth usa internamente
+    get "auth/:provider/callback", to: "omniauth_callbacks#github"
+    
+    # Rota de falha (caso o usuário negue o acesso)
+    get "auth/failure", to: redirect("/login")
+
+    
 end
