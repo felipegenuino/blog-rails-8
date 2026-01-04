@@ -7,7 +7,7 @@ User.destroy_all
 puts "🔐 Criando usuário administrador..."
 User.create!(
   email_address: "email@dev.test",
-  password: "Test@01"
+  password: "Test@01",
   password_confirmation: "Test@01",
   role: :admin
 )
