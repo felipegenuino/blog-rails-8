@@ -1,35 +1,66 @@
-<nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="flex h-16 justify-between items-center">
-      <div class="flex items-center gap-8">
-        <%= link_to "Meu Blog", root_path, class: "text-2xl font-black tracking-tighter text-indigo-600 hover:opacity-80 transition-opacity" %>
-        <div class="hidden md:flex items-center space-x-4">
-          <%= link_to "Posts", posts_path, class: "text-sm font-medium text-gray-600 hover:text-indigo-600" %>
-        </div>
+<nav class="bg-white border-b border-gray-100 py-4" data-controller="dropdown" data-action="click@window->dropdown#hide">
+  <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+    
+    <%# Lado Esquerdo: Logo %>
+    <%= link_to root_path, class: "text-xl font-bold text-gray-900 flex items-center gap-2" do %>
+      <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+        <i data-lucide="sparkles" class="w-5 h-5"></i>
       </div>
+      <span>DevBlog</span>
+    <% end %>
 
-      <div class="flex items-center gap-4">
-        <% if authenticated? %>
-          <div class="flex items-center gap-x-4 border-l pl-4 border-gray-200">
+    <%# Lado Direito: Ações do Usuário %>
+    <div class="flex items-center gap-4">
+      <% if authenticated? %>
+        
+        <div class="relative">
+          <%# Botão do Perfil %>
+          <button data-action="click->dropdown#toggle" class="flex items-center gap-2 p-1 pr-3 rounded-full hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200">
+            <div class="h-8 w-8 rounded-full overflow-hidden bg-gray-100 border border-gray-200">
+              <% if Current.user.avatar_url.present? %>
+                <%= image_tag Current.user.avatar_url, class: "h-full w-full object-cover" %>
+              <% else %>
+                <div class="h-full w-full flex items-center justify-center bg-indigo-50 text-indigo-700 text-xs font-bold uppercase">
+                  <%= Current.user.email_address[0..1] %>
+                </div>
+              <% end %>
+            </div>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+          </button>
+
+          <%# Menu Dropdown (Escondido por padrão) %>
+          <div data-dropdown-target="menu" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in zoom-in duration-200">
             
-            <% if authenticated? && Current.user.admin? %>
-              <%= link_to admin_dashboard_path, class: "flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg" do %>
-                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                <span>Admin Dash</span>
+            <div class="px-4 py-2 border-b border-gray-50 mb-1">
+              <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Conta</p>
+              <p class="text-sm font-semibold text-gray-900 truncate"><%= Current.user.email_address %></p>
+            </div>
+
+            <% if Current.user.admin? %>
+              <%= link_to admin_dashboard_path, class: "flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" do %>
+                <i data-lucide="layout-dashboard" class="w-4 h-4 text-gray-400"></i>
+                Dashboard Admin
               <% end %>
             <% end %>
 
-            <%= button_to session_path, method: :delete, 
-                class: "flex items-center gap-x-2 rounded-full bg-red-50 px-3 py-1.5 text-xs font-bold text-red-600 hover:bg-red-100 transition-all border-none cursor-pointer",
-                data: { turbo: false } do %>
-              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-              Sair
+            <%= link_to "#", class: "flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" do %>
+              <i data-lucide="settings" class="w-4 h-4 text-gray-400"></i>
+              Configurações
             <% end %>
+
+            <div class="border-t border-gray-50 mt-1 pt-1">
+              <%= button_to session_path, method: :delete, class: "w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors" do %>
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Sair
+              <% end %>
+            </div>
           </div>
-        <% else %>
-          <%= link_to "Entrar", new_session_path, class: "text-sm font-semibold text-gray-900 hover:text-indigo-600" %>
-        <% end %>
-      </div>
+        </div>
+
+      <% else %>
+        <%= link_to "Entrar", new_session_path, class: "text-sm font-semibold text-gray-700 hover:text-indigo-600" %>
+        <%= link_to "Criar Conta", "#", class: "bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-all" %>
+      <% end %>
     </div>
   </div>
 </nav>
