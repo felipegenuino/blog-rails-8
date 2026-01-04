@@ -58,3 +58,18 @@ Criar uma plataforma de conteúdo técnico focada em performance, SEO e experiê
 3. **Stripe:** É a melhor escolha para Rails. Eles têm uma gem oficial fantástica que lida com cartões de crédito e subscrições de forma muito segura.
 
 **Boa viagem com o MacBook hoje!** Com este `projects.md` atualizado, tens um plano de negócio real para o teu blog. Quando estiveres pronto para codar a restrição de conteúdo, avisa!
+
+
+
+
+## Install
+
+
+### Apaga o banco, cria de novo e roda as migrações (inclusive a do 'role' e 'premium')
+rails db:drop db:create db:migrate
+
+### Agora sim, roda o seed
+rails db:seed
+
+### Roda o projeto
+bin/dev  

@@ -1,3 +1,18 @@
+<nav>
+  <% if authenticated? %>
+    <span>Olá, <%= Current.user.email_address %></span>
+    <% if Current.user.admin? %>
+      <%= link_to "Painel Admin", admin_dashboard_path %>
+    <% end %>
+    <%= button_to "Sair", session_path, method: :delete %>
+  <% else %>
+    <%= link_to "Entrar", new_session_path %>
+    <%= link_to "Criar Conta", new_registration_path %>
+  <% end %>
+</nav>
+
+
+
 <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 justify-between items-center">

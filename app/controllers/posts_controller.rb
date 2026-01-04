@@ -20,13 +20,21 @@ class PostsController < ApplicationController
   def show 
     # Tenta buscar pelo slug. Se falhar, tenta pelo ID (para links antigos).
     @post = Post.friendly.find(params[:id])
+
+     # Lógica de Paywall
+    if @post.premium? && !user_can_access_premium?
+      flash[:alert] = "Este conteúdo é exclusivo para assinantes Premium."
+      redirect_to root_path # Ou renderizar uma view de "Upgrade"
+      return
+    end
+
     
     # No Rails 8, usamos geralmente Current.user ou apenas 'authenticated?'
     unless authenticated? && Current.user&.admin?
       ahoy.track "Viewed Post", post_id: @post.id
     end
     
-  rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound
       
     # Se não achar nada, manda pra home com um aviso em vez de dar erro 500
     redirect_to posts_path, alert: "Conteúdo não encontrado."
@@ -82,7 +90,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       # Garante que volta para a página inicial de posts com uma mensagem
-    format.html { redirect_to posts_path, status: :see_other, notice: "Post removido com sucesso." }
+      format.html { redirect_to posts_path, status: :see_other, notice: "Post removido com sucesso." }
      
       format.json { head :no_content }
     end
@@ -95,6 +103,11 @@ class PostsController < ApplicationController
       # ou use o slug automaticamente.
       @post = Post.friendly.find(params[:id])
     end
+
+    def user_can_access_premium?
+      # Admin e Premium têm acesso total
+      authenticated? && (Current.user.admin? || Current.user.premium?)
+    end 
 
    
 end

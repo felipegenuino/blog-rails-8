@@ -6,9 +6,10 @@ User.destroy_all
 
 puts "🔐 Criando usuário administrador..."
 User.create!(
-  email_address: "admin@blog.com",
-  password: "senha123",
-  password_confirmation: "senha123"
+  email_address: "email@dev.test",
+  password: "Test@01"
+  password_confirmation: "Test@01",
+  role: :admin
 )
 
 # Dados para sortear
@@ -60,10 +61,13 @@ puts "📝 Gerando 30 posts variados..."
   
   content_html += "</div>"
 
+ 
   Post.create!(
     title: current_title,
     content: content_html,
     youtube_url: is_video ? youtube_links.sample : nil,
+    # Sorteia: 20% de chance de ser um post exclusivo para assinantes
+    premium: (rand > 0.8), 
     created_at: Time.current - i.hours - rand(1..15).days,
     updated_at: Time.current
   )
@@ -72,5 +76,5 @@ puts "📝 Gerando 30 posts variados..."
 end
 
 puts "\n\n✨ Sucesso!"
-puts "✅ 1 Admin criado (admin@blog.com)"
+puts "✅ 1 Admin criado (design@felipegenuino.com)"
 puts "✅ 30 Posts gerados (com Vídeos, Notas e Artigos)"
