@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "errors/not_found"
   # 1. Removido o 'resources :comments' que estava aqui no topo sozinho.
 
   # Rotas Administrativas
@@ -23,4 +24,7 @@ Rails.application.routes.draw do
   # OmniAuth / Login Social
   get "auth/:provider/callback", to: "omniauth_callbacks#github"
   get "auth/failure", to: redirect("/login")
+
+  # Rota "Catch-all" para 404 - DEVE SER A ÚLTIMA LINHA
+  match "*unmatched", to: "errors#not_found", via: :all
 end
