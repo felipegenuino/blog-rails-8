@@ -1,26 +1,27 @@
-// Add a service worker for processing Web Push notifications:
-//
-// self.addEventListener("push", async (event) => {
-//   const { title, options } = await event.data.json()
-//   event.waitUntil(self.registration.showNotification(title, options))
-// })
-//
-// self.addEventListener("notificationclick", function(event) {
-//   event.notification.close()
-//   event.waitUntil(
-//     clients.matchAll({ type: "window" }).then((clientList) => {
-//       for (let i = 0; i < clientList.length; i++) {
-//         let client = clientList[i]
-//         let clientPath = (new URL(client.url)).pathname
-//
-//         if (clientPath == event.notification.data.path && "focus" in client) {
-//           return client.focus()
-//         }
-//       }
-//
-//       if (clients.openWindow) {
-//         return clients.openWindow(event.notification.data.path)
-//       }
-//     })
-//   )
-// })
+// app/views/pwa/service-worker.js.erb
+
+const CACHE_NAME = "devblog-v1";
+const OFFLINE_ASSETS = [
+    "/",
+    "/assets/application.css",
+    "/assets/application.js",
+    "/offline.html" // Crie uma página simples de "Você está offline"
+];
+
+// Instala o service worker e guarda os arquivos essenciais
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => cache.addAll(OFFLINE_ASSETS))
+    );
+});
+
+// Intercepta as requisições
+self.addEventListener("fetch", (event) => {
+    if (event.request.mode === "navigate") {
+        event.respondWith(
+            fetch(event.request).catch(() => {
+                return caches.match("/") || caches.match("/offline.html");
+            })
+        );
+    }
+});
