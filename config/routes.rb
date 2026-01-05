@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+
+  # Rota pwa 
+  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+
+  
   get "errors/not_found"
   # 1. Removido o 'resources :comments' que estava aqui no topo sozinho.
 
@@ -28,7 +34,4 @@ Rails.application.routes.draw do
   # Rota "Catch-all" para 404 - DEVE SER A ÚLTIMA LINHA
   match "*unmatched", to: "errors#not_found", via: :all
 
-# Rota pwa
-  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 end
